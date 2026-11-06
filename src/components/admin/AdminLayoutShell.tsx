@@ -36,11 +36,18 @@ export default function AdminLayoutShell({ children }: AdminLayoutShellProps) {
     return <>{children}</>;
   }
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+    } catch {
+      // ignore network errors on logout
+    }
     if (typeof window !== 'undefined') {
       sessionStorage.removeItem('kwara_admin_auth');
+      sessionStorage.removeItem('kwara_admin_user');
     }
     router.push('/admin/login');
+    router.refresh();
   };
 
   const navItems = [

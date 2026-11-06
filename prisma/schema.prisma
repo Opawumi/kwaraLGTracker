@@ -1,0 +1,101 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  ADMIN
+  EDITOR
+  VIEWER
+}
+
+enum AllocationStatus {
+  DRAFT
+  PUBLISHED
+}
+
+model User {
+  id           String     @id @default(cuid())
+  email        String     @unique
+  name         String
+  passwordHash String
+  role         Role       @default(EDITOR)
+  active       Boolean    @default(true)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  allocations  Allocation[]
+  auditLogs    AuditLog[]
+}
+
+model Lga {
+  id           String       @id @default(cuid())
+  slug         String       @unique
+  name         String       @unique
+  state        String       @default("Kwara")
+  chairman     String?
+  headquarters String?
+  population   String?
+  area         String?
+  allocations  Allocation[]
+}
+
+model Allocation {
+  id                  String           @id @default(cuid())
+  lgaId               String
+  lga                 Lga              @relation(fields: [lgaId], references: [id])
+  month               Int
+  year                Int
+  // Naira amounts stored as BigInt (whole naira) to avoid float rounding
+  statutoryAllocation BigInt           @default(0)
+  vatAllocation       BigInt           @default(0)
+  excessCrude         BigInt           @default(0)
+  otherRevenue        BigInt           @default(0)
+  grossAllocation     BigInt
+  penaltyDeductions   BigInt           @default(0)
+  loanDeductions      BigInt           @default(0)
+  otherDeductions     BigInt           @default(0)
+  totalDeductions     BigInt           @default(0)
+  netAllocation       BigInt
+  status              AllocationStatus @default(DRAFT)
+  publishedAt         DateTime?
+  notes               String           @default("")
+  createdById         String
+  createdBy           User             @relation(fields: [createdById], references: [id])
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @updatedAt
+  documents           Document[]
+
+  @@unique([lgaId, month, year])
+  @@index([year, month])
+  @@index([status])
+}
+
+model Document {
+  id           String      @id @default(cuid())
+  allocationId String?
+  allocation   Allocation? @relation(fields: [allocationId], references: [id], onDelete: Cascade)
+  title        String
+  fileUrl      String
+  fileType     String?
+  sizeBytes    Int?
+  uploadedAt   DateTime    @default(now())
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  action    String
+  entity    String
+  entityId  String?
+  details   Json?
+  ip        String?
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+}
+

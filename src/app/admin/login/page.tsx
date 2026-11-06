@@ -8,15 +8,15 @@ import { FiEye, FiEyeOff, FiLock, FiMail, FiArrowLeft, FiAlertCircle } from 'rea
 
 export default function AdminLoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState('admin@kwara.gov.ng');
-  const [password, setPassword] = useState('password123');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [forgotPasswordMsg, setForgotPasswordMsg] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
@@ -27,21 +27,31 @@ export default function AdminLoginPage() {
 
     setLoading(true);
 
-    // Realistic authentication simulation
-    setTimeout(() => {
-      setLoading(false);
-      // Accept demo credentials
-      if (email.includes('@') && password.length >= 6) {
-        // Set a demo session flag in sessionStorage
-        if (typeof window !== 'undefined') {
-          sessionStorage.setItem('kwara_admin_auth', 'true');
-          sessionStorage.setItem('kwara_admin_user', email);
-        }
-        router.push('/admin/dashboard');
-      } else {
-        setError('Invalid administrative credentials. Use the demo pre-filled values.');
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.error || 'Authentication failed. Please verify credentials.');
+        setLoading(false);
+        return;
       }
-    }, 600);
+
+      if (typeof window !== 'undefined') {
+        sessionStorage.setItem('kwara_admin_auth', 'true');
+        sessionStorage.setItem('kwara_admin_user', data.name || email);
+      }
+
+      router.push('/admin/dashboard');
+      router.refresh();
+    } catch {
+      setError('Unable to connect to the authentication server. Please try again.');
+      setLoading(false);
+    }
   };
 
   return (
