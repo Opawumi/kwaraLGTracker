@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import PublicLayout from '@/components/public/PublicLayout';
-import { FiCheckCircle, FiShield, FiFileText, FiLayers, FiHelpCircle, FiArrowRight } from 'react-icons/fi';
+import { FiCheckCircle, FiShield, FiFileText, FiHelpCircle, FiArrowRight, FiHeart } from 'react-icons/fi';
 
 export default function AboutPage() {
   return (
@@ -14,7 +14,7 @@ export default function AboutPage() {
               <li className="breadcrumb-item active" aria-current="page">About the Platform</li>
             </ol>
           </nav>
-          <h1>About kwaraLGTracker</h1>
+          <h1>About the Platform</h1>
           <p>
             Promoting open government, fiscal accountability, and citizen empowerment across Kwara State.
           </p>
@@ -26,16 +26,32 @@ export default function AboutPage() {
         <div className="row justify-content-center">
           <div className="col-lg-9 content-page">
 
-            {/* Purpose */}
+            {/* Purpose & Background */}
             <div className="p-4 bg-white border rounded mb-4 shadow-sm">
               <h2 className="d-flex align-items-center gap-2 mt-0">
-                <FiShield className="text-primary" /> Purpose of the Platform
+                <FiShield className="text-primary" /> About the Platform
               </h2>
               <p>
-                <strong>kwaraLGTracker</strong> is an institutional initiative designed to make financial distributions from the Federation Account Allocation Committee (FAAC) to all 16 Local Government Areas in Kwara State completely accessible, verifiable, and transparent to the general public.
+                As the third tier of government, local governments were established to bring governance and development closer to grassroots communities through the provision of basic, essential services and the implementation of targeted development programmes.
               </p>
               <p>
-                By opening allocation records to citizens, civil society organizations, researchers, and community leaders, the platform bridges the gap between public finances and grassroots governance. We believe open fiscal data empowers communities to participate constructively in local development priorities.
+                However, many local government councils across Nigeria have consistently fallen short of these responsibilities, despite receiving increased federal allocations, thereby undermining community growth and development at the grassroots level. This gap is largely driven by interference from state governors as well as widespread citizen apathy toward local governance.
+              </p>
+              <p>
+                A significant proportion of citizens remain far more fixated on national and state-level political developments than on the activities of the councils closest to them, creating a vacuum of accountability that poorly performing councils have exploited with impunity. People also lack access to information regarding the finances of their local government councils, which could equip them to demand accountability.
+              </p>
+              <p>
+                <strong>kwaraLGTracker</strong> is therefore designed for Kwarans to access information about their council&apos;s finances, especially monthly federal allocations, report abandoned or poorly executed projects, and provide feedback on council services. Our goal is to promote a culture of accountability and transparency that strengthens good governance and improves service delivery across the 16 local government councils of Kwara State.
+              </p>
+            </div>
+
+            {/* Acknowledgment / Partner */}
+            <div className="p-4 bg-white border rounded mb-4 shadow-sm border-start border-4 border-success">
+              <h3 className="h5 d-flex align-items-center gap-2 mt-0 text-success fw-bold">
+                <FiHeart className="text-danger" /> Acknowledgement & Support
+              </h3>
+              <p className="mb-0 text-secondary">
+                We are grateful to <strong>Naijayouthfund</strong> for supporting this project and its shared commitment to building a more accountable and citizen-centered democracy in Nigeria.
               </p>
             </div>
 
@@ -152,14 +168,6 @@ export default function AboutPage() {
                   </tbody>
                 </table>
               </div>
-            </div>
-
-            {/* Disclaimer & Transparency Note */}
-            <div className="alert alert-warning p-4 border rounded mb-4">
-              <h5 className="alert-heading fw-bold">⚠️ Demonstration & Transparency Notice</h5>
-              <p className="mb-0 small">
-                The data currently displayed on this demonstration environment contains simulated figures (marked as DEMO DATA) designed to illustrate the operational workflow and architecture of the Kwara State Local Government Allocation Transparency Platform. In production, this platform connects to verified FAAC and JAAC disbursement repositories.
-              </p>
             </div>
 
             {/* CTA */}

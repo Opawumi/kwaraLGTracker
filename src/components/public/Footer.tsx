@@ -24,10 +24,10 @@ export default function Footer() {
                 <FiMapPin style={{ marginRight: 8 }} /> Ilorin, Kwara State, Nigeria
               </span>
               <span style={{ fontSize: '0.82rem' }}>
-                <FiMail style={{ marginRight: 8 }} /> info@kwaralgt.gov.ng
+                <FiMail style={{ marginRight: 8 }} /> mafyedi@gmail.com
               </span>
               <span style={{ fontSize: '0.82rem' }}>
-                <FiPhone style={{ marginRight: 8 }} /> +234 (0) 800 000 0000
+                <FiPhone style={{ marginRight: 8 }} /> +2347030627945
               </span>
             </div>
           </div>
