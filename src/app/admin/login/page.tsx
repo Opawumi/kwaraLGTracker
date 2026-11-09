@@ -11,7 +11,6 @@ export default function AdminLoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(true);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [forgotPasswordMsg, setForgotPasswordMsg] = useState(false);
@@ -131,24 +130,10 @@ export default function AdminLoginPage() {
             </div>
           </div>
 
-          {/* Remember me */}
-          <div className="form-check mb-4">
-            <input
-              className="form-check-input"
-              type="checkbox"
-              id="rememberMe"
-              checked={rememberMe}
-              onChange={(e) => setRememberMe(e.target.checked)}
-            />
-            <label className="form-check-label small text-secondary" htmlFor="rememberMe">
-              Remember this workstation for 30 days
-            </label>
-          </div>
-
           {/* Submit */}
           <button
             type="submit"
-            className="btn btn-primary w-100 py-2 fw-semibold d-flex align-items-center justify-content-center gap-2"
+            className="btn btn-primary w-100 py-2 fw-semibold d-flex align-items-center justify-content-center gap-2 mt-4"
             disabled={loading}
           >
             {loading ? (
@@ -163,14 +148,6 @@ export default function AdminLoginPage() {
             )}
           </button>
         </form>
-
-        {/* Demo credentials hint */}
-        <div className="mt-4 p-3 bg-light rounded border text-muted" style={{ fontSize: '0.78rem' }}>
-          <strong>Authorized Access Only:</strong> This console is restricted to authorized state finance officers and data administrators.
-          <div className="mt-1 text-primary">
-            Demo pre-filled credentials: <code>admin@kwara.gov.ng</code>
-          </div>
-        </div>
 
         {/* Back to public site */}
         <div className="text-center mt-4">
